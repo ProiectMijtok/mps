@@ -2,10 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deck : MonoBehaviour {
+public class Deck : MonoBehaviour
+{
 
     List<int> cardIds;
-    System.Random rnd;
+
+    // Use this for initialization
+    void Awake()
+    {
+        Populate();
+    }
+
+    public IEnumerable<int> getCards()
+    {
+        foreach(int i in cardIds)
+        {
+            yield return i;
+        }
+    }
 
     void Populate()
     {
@@ -18,17 +32,16 @@ public class Deck : MonoBehaviour {
             cardIds.Clear();
         }
 
-        for(int i = 0; i < 11; i++)
+        for (int i = 0; i < 11; i++)
         {
-            int id = rnd.Next(1,2);
-            while (!cardIds.Contains(id))
-                id = rnd.Next(1, 62);
+            int id = Random.Range(1, 61);
+            while (cardIds.Contains(id))
+            {
+                id = Random.Range(1, 61);
+            }
             cardIds.Add(id);
         }
     }
-	// Use this for initialization
-	void Start () {
-        Populate();
-	}
+
 
 }

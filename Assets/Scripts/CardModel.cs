@@ -17,7 +17,6 @@ public class CardModel : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        setSprite(1);
     }
 
     void ToggleFace(bool showFace)
@@ -44,6 +43,6 @@ public class CardModel : MonoBehaviour
 
     void OnMouseDown()
     {
-        //setSprite(this.playerId + 1);
+        setSprite(this.playerId + 1);
     }
 }
