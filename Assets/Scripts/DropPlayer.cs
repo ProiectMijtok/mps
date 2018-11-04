@@ -14,6 +14,7 @@ public class DropPlayer : MonoBehaviour
     public List<DropArea> dropAreas;
     public int playerAttack;
     public int playerDefence;
+    List<GameObject> cards;
     GameMaster gm;
 
     void Awake()
@@ -22,12 +23,34 @@ public class DropPlayer : MonoBehaviour
         playerDefence = 0;
     }
 
+    public void addCard(GameObject c)
+    {
+        this.cards.Add(c);
+    }
+
     internal void reset(GameMaster g)
     {
         gm = g;
         wait = false;
         this.playerAttack = 0;
         this.playerDefence = 0;
+        if (cards == null)
+            cards = new List<GameObject>();
+        else
+            destroyCards();
+    }
+
+    private void destroyCards()
+    {
+        /*foreach(GameObject o in cards)
+        {
+            Destroy(o);
+        }
+        cards.Clear();*/
+        foreach(DropArea a in dropAreas)
+        {
+            a.reset();
+        }
     }
 
     /*public void OnDrop(PointerEventData eventData)
@@ -53,6 +76,9 @@ public class DropPlayer : MonoBehaviour
         DropArea minArea = null;
         foreach (DropArea a in dropAreas)
         {
+            if (a.hasCard)
+                continue;
+
             float distance = Vector3.Distance(a.transform.position, o.transform.position);
             if (distance < minDist)
             {
@@ -69,7 +95,6 @@ public class DropPlayer : MonoBehaviour
             {
                 case DEFENCE:
                     playerDefence += c.def;
-                    Debug.Log("YUYUYU " + playerDefence);
                     break;
                 case ATTACK:
                     playerAttack += c.at;

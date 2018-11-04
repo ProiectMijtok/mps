@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class GameMaster : MonoBehaviour {
     public bool player1ChoseCards;
     public PlayerDone p1EndRound;
     public PlayerDone p2EndRound;
+    public Text player1Score;
+    public Text player2Score;
     SpriteRenderer rnd;
     int scoreP1;
     int scoreP2;
@@ -25,6 +28,13 @@ public class GameMaster : MonoBehaviour {
     {
         rnd = GetComponent<SpriteRenderer>();
         rnd.color = new Color(0.2f,0.2f,0.2f);
+        foreach(SpriteRenderer r in GetComponentsInChildren<SpriteRenderer>())
+        {
+            if(r != null)
+            {
+                r.color = new Color(0.2f, 0.2f, 0.2f);
+            }
+        }
         player1ChoseCards = false;
         player1.player = 1;
         player1.AwakeInMaster(new Vector3(-9, 1, -3));
@@ -33,6 +43,8 @@ public class GameMaster : MonoBehaviour {
         otherIsDone = false;
         scoreP1 = 0;
         scoreP2 = 0;
+        player1Score.text = "0";
+        player2Score.text = "0";
     }
 
     public void playerDone()
@@ -46,9 +58,15 @@ public class GameMaster : MonoBehaviour {
         else
         {
             rnd.color = new Color(1, 1, 1);
+            foreach (SpriteRenderer r in GetComponentsInChildren<SpriteRenderer>())
+            {
+                if (r != null)
+                {
+                    r.color = new Color(1, 1, 1);
+                }
+            }
             p1.reset(this);
             p2.reset(this);
-            //p1.start();
             p2.wait = true;
         }
     }
@@ -87,13 +105,28 @@ public class GameMaster : MonoBehaviour {
             resetAll();
         } else
         {
-            otherIsDone = true;
             turnDone();
+            otherIsDone = true;
         }
     }
 
     private void resetAll()
     {
+        p1.reset(this);
+        p2.reset(this);
+        otherIsDone = false;
+
+        if(scoreP1 + scoreP2 == 1)
+        {
+            p1.wait = true;
+            p2.wait = false;
+        }
+        else
+        {
+            p1.wait = false;
+            p2.wait = true;
+        }
+        
         //TODO - reset board and scores;
     }
 
@@ -109,6 +142,14 @@ public class GameMaster : MonoBehaviour {
         else
         {
             scoreP2 += 1;
+        }
+
+        player1Score.text = scoreP1 + "";
+        player2Score.text = scoreP2 + "";
+
+        if(scoreP1 + scoreP2 == 3)
+        {
+
         }
     }
 }
