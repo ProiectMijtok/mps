@@ -4,13 +4,31 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-
+    public int player;
     List<int> cardIds;
+    public bool newPlayerAdded;
+    private int addedPlayers;
 
     // Use this for initialization
     void Awake()
     {
-        Populate();
+        addedPlayers = 0;
+        //Populate();
+        if(cardIds == null)
+        {
+            cardIds = new List<int>();
+        } else
+        {
+            cardIds.Clear();
+        }
+    }
+
+    public void addCard(int id)
+    {
+        cardIds.Add(id);
+        addedPlayers++;
+        if(addedPlayers == 11)
+            GetComponent<DView>().ShowPlayers(player);
     }
 
     public IEnumerable<int> getCards()

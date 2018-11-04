@@ -8,7 +8,9 @@ public class CardModel : MonoBehaviour
     SpriteRenderer rnd;
     public Player player;
     public int playerId = 0;
+    public int at;
     public Text attack;
+    public int def;
     public Text defence;
     public Text name;
     public int countryId;
@@ -34,7 +36,9 @@ public class CardModel : MonoBehaviour
         this.playerId = _playerId;
         this.player = PlayersRepository.PlayersRepository.getPlayerById(_playerId);
         this.attack.text = "Attack: " + player.attack;
+        at = player.attack;
         this.defence.text = "Defence: " + player.defence;
+        def = player.defence;
         this.name.text = player.name;
         this.countryId = player.countryId;
         playerPhoto.sprite = Resources.Load<Sprite>(name.text);
@@ -43,6 +47,6 @@ public class CardModel : MonoBehaviour
 
     void OnMouseDown()
     {
-        setSprite(this.playerId + 1);
+       // setSprite(this.playerId + 1);
     }
 }
