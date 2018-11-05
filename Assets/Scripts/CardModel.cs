@@ -4,7 +4,6 @@ using PlayersRepository;
 
 public class CardModel : MonoBehaviour
 {
-
     SpriteRenderer rnd;
     public Player player;
     public int playerId = 0;
@@ -16,6 +15,7 @@ public class CardModel : MonoBehaviour
     public int countryId;
     public Image playerPhoto;
     public Image flag;
+    internal DropArea area;
     // Use this for initialization
     void Start()
     {
@@ -47,6 +47,29 @@ public class CardModel : MonoBehaviour
 
     void OnMouseDown()
     {
-       // setSprite(this.playerId + 1);
+        if(GameMaster.isRedCard)
+            GetComponent<Draggable>().dp.remove(area);
+        else if(GameMaster.yellowCardActive)
+        {
+            if (area == null)
+                return;
+            this.def -= 2;
+            this.defence.text = "Defence: " + this.def;
+            GetComponent<Draggable>().dp.changed(0, -2, area);
+        }
+        else if(GameMaster.isChange)
+        {
+            GetComponent<Draggable>().dp.change(this.gameObject);
+        }
+        else if(GameMaster.isFoul)
+        {
+            if (area == null)
+                return;
+            this.def -= 1;
+            this.defence.text = "Defence: " + this.def;
+            this.at -= 1;
+            this.defence.text = "Attack: " + this.at;
+            GetComponent<Draggable>().dp.changed(-1, -1, area);
+        }
     }
 }

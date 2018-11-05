@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dp: {fileID: 114947102599957844, guid: 638c5916cf0609148b1398e52117a4b9, type: 2}
+  locked: 0
 --- !u!114 &114444913950322360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -344,8 +345,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e338ff2796c56442815a6bf0eabced1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gm: {fileID: 0}
   playerId: 61
+  at: 0
   attack: {fileID: 114163891477659036}
+  def: 0
   defence: {fileID: 114491549467040670}
   name: {fileID: 114579951573880606}
   countryId: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Deck : MonoBehaviour
 {
     public int player;
+    public int limit;
     List<int> cardIds;
     public bool newPlayerAdded;
     private int addedPlayers;
@@ -23,12 +24,12 @@ public class Deck : MonoBehaviour
         }
     }
 
-    public void addCard(int id)
+    public void addCard(int id, GameMaster gm)
     {
         cardIds.Add(id);
         addedPlayers++;
-        if(addedPlayers == 11)
-            GetComponent<DView>().ShowPlayers(player);
+        if(addedPlayers == limit)
+            GetComponent<DView>().ShowPlayers(player, gm);
     }
 
     public IEnumerable<int> getCards()
@@ -38,28 +39,4 @@ public class Deck : MonoBehaviour
             yield return i;
         }
     }
-
-    void Populate()
-    {
-        if (cardIds == null)
-        {
-            cardIds = new List<int>();
-        }
-        else
-        {
-            cardIds.Clear();
-        }
-
-        for (int i = 0; i < 11; i++)
-        {
-            int id = Random.Range(1, 61);
-            while (cardIds.Contains(id))
-            {
-                id = Random.Range(1, 61);
-            }
-            cardIds.Add(id);
-        }
-    }
-
-
 }

@@ -9,9 +9,12 @@ public class DView : MonoBehaviour
 
     public Vector3 start;
     public Vector3 start1;
+    public Vector3 startf1;
     public Vector3 start2;
+    public Vector3 startf2;
     public float cardOffset;
     public GameObject cardPrefab;
+    int limit;
 
     void Awake()
     {
@@ -19,21 +22,42 @@ public class DView : MonoBehaviour
         //ShowPlayers();
         start1 = new Vector3(6.435f, -8.355f, -3);
         start2 = new Vector3(6.435f, 8.255f, -3);
+        startf1 = new Vector3(7.11f, -2.67f, -3);
+        startf2 = new Vector3(7.11f, 2.7f, -3);
 
     }
 
-    public void ShowPlayers(int player)
+    public void ShowPlayers(int player, GameMaster gm)
     {
         double cardOffset = 1.565;
-        Vector3 reset;
+        Vector3 reset = new Vector3(0,0,0);
 
         if (player == 1) {
-            start = start1;
-            reset = new Vector3((float)cardOffset, (float)-2.225);
+            if (cardPrefab.GetComponent<CardModel>() != null)
+            {
+                start = start1;
+                reset = new Vector3((float)cardOffset, (float)-2.225);
+                limit = 6;
+            } else if(cardPrefab.GetComponent<Functional>() != null)
+            {
+                start = startf1;
+                reset = new Vector3(-(float)cardOffset/2, (float)-2.225);
+                limit = 2;
+            }
         }
         else {
-            start = start2;
-            reset = new Vector3((float)cardOffset, (float)2.225);
+            if (cardPrefab.GetComponent<CardModel>() != null)
+            {
+                start = start2;
+                reset = new Vector3((float)cardOffset, (float)2.225);
+                limit = 6;
+            }
+            else if (cardPrefab.GetComponent<Functional>() != null)
+            {
+                start = startf2;
+                reset = new Vector3(-(float)cardOffset/2, (float)2.225);
+                limit = 2;
+            }
         }
         int cardCount = 0;
         
@@ -45,35 +69,19 @@ public class DView : MonoBehaviour
             cardCopy.transform.position = temp;
             cardCount++;
             CardModel card = cardCopy.GetComponent<CardModel>();
-            card.setSprite(i);
+            if (card != null)
+                card.setSprite(i);
+            else
+            {
+                Functional fct = cardCopy.GetComponent<Functional>();
+                fct.set(i);
+            }
             co += cardOffset;
-            if(cardCount == 6)
+            if(cardCount == limit)
             {
                 co = 0;
                 start = start + reset;
             }
         }
     }
-
-    void Updat()
-    {
-        /*if(deck.newPlayerAdded)
-        {
-
-            int cardCount = 0;
-            foreach (int i in deck.getCards())
-            {
-                float co = cardOffset * cardCount;
-                GameObject cardCopy = (GameObject)Instantiate(cardPrefab);
-                Vector3 temp = start + new Vector3(co, 0f);
-                cardCopy.transform.position = temp;
-                cardCount++;
-                CardModel card = cardCopy.GetComponent<CardModel>();
-                card.setSprite(i);
-            }
-            deck.newPlayerAdded = false;
-        }*/
-    }
-
-
 }

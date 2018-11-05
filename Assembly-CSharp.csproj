@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\DropArea.cs" />
      <Compile Include="Assets\Scripts\DropPlayer.cs" />
      <Compile Include="Assets\Scripts\DView.cs" />
+     <Compile Include="Assets\Scripts\Functional.cs" />
      <Compile Include="Assets\Scripts\GameMaster.cs" />
      <Compile Include="Assets\Scripts\PlayerDone.cs" />
  <Reference Include="UnityEditor.StandardEvents">

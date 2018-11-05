@@ -17,7 +17,7 @@ public class Draggable : MonoBehaviour, IDragHandler, IDropHandler,IBeginDragHan
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (dp.wait || locked)
+        if ((dp != null && dp.wait) || locked)
         {
             return;
         }
@@ -27,7 +27,7 @@ public class Draggable : MonoBehaviour, IDragHandler, IDropHandler,IBeginDragHan
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(dp.wait || locked)
+        if((dp != null && dp.wait) || locked)
         {
             return;
         }
@@ -39,11 +39,11 @@ public class Draggable : MonoBehaviour, IDragHandler, IDropHandler,IBeginDragHan
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (dp.wait || locked)
+        if ((dp != null && dp.wait) || locked)
         {
             return;
         }
-        this.transform.localScale = new Vector3(1,1,1);
+        this.transform.localScale = new Vector3(1,1,1);;
         if(dp != null)
         {
             dp.Drop(this.gameObject);

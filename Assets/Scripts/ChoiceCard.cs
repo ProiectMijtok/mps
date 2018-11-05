@@ -10,7 +10,7 @@ public class ChoiceCard : MonoBehaviour {
 	// Update is called once per frame
     void Start()
     {
-        playerId = GetComponent<CardModel>().playerId;
+        //playerId = GetComponent<CardModel>().playerId;
     }
 
 	void OnMouseDown() {
